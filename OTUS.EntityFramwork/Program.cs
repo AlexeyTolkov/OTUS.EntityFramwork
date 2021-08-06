@@ -8,9 +8,8 @@ namespace OTUS.EntityFramwork
     {
         static void Main(string[] args)
         {
-            //var avConsole = new AvitoConsoleClient();
+            IConsoleClient avConsole = new AvitoConsoleClient();
             //var avManager = new AvitoDBManager();
-
             //var app = avitoApplication();
 
 
