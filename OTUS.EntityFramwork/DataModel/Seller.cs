@@ -38,7 +38,7 @@ public class Seller : IUserInput
     public void SaveChanges(AvitoContext db)
     {
         if (db != null)
-        { 
+        {
             db.Sellers.Add(this);
             db.SaveChanges();
             Console.WriteLine("Запись добавлена..");

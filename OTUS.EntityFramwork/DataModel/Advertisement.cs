@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 public class Advertisement : IUserInput
@@ -30,5 +32,15 @@ public class Advertisement : IUserInput
     public List<string> GetTableFields()
     {
         return new List<string>() { "Description", "Price", "SellerId", "CategoryId" };
+    }
+
+    public void SaveChanges(AvitoContext db)
+    {
+        if (db != null)
+        {
+            db.Advertisements.Add(this);
+            db.SaveChanges();
+            Console.WriteLine("Запись добавлена..");
+        }
     }
 }

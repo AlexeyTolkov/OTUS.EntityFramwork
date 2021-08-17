@@ -2,7 +2,7 @@
 
 namespace OTUS.EntityFramwork
 {
-    partial class AvitoConsoleClient : IConsoleClient
+    partial class AvitoConsoleClient : IClient
     {
         enum ConsoleMenuScreen
         {
@@ -48,7 +48,7 @@ namespace OTUS.EntityFramwork
             }  
         }
 
-        public void GiveABestUserExperienceEver()
+        public void StartUI()
         {
             var command = "" ;
             while (command.ToLower() != "q")
@@ -65,15 +65,14 @@ namespace OTUS.EntityFramwork
             switch (command)
             {
                 case "1":
-                    _avitoDBManager.ShowAllDataAsync();
+                    _avitoDBManager.ShowAllData();
                     break;
 
                 case "2":
-                    /*using (var db = new AvitoContext())
-                    {
-                        AddRecordToTable(db);
-                    }*/
                     _currentMenuScreen = ConsoleMenuScreen.UserInput;
+                    break;
+
+                case "q":
                     break;
 
                 default:
@@ -84,28 +83,34 @@ namespace OTUS.EntityFramwork
 
         private void UserInputMenuSelect(string command)
         {
-            var db = new AvitoContext();
-            switch (command)
+            using (var db = new AvitoContext())
             {
-                case "1":
-                    var seller = new Seller();
-                    _avitoDBManager.AddRecordToTable(db, seller);
-                    break;
+                switch (command)
+                {
+                    case "1":
+                        _avitoDBManager.AddRecordToTable(db, new Seller());
+                        break;
 
-                case "2":
-                    var category = new Category();
-                    _avitoDBManager.AddRecordToTable(db, category);
-                    break;
+                    case "2":
+                        _avitoDBManager.AddRecordToTable(db, new Category());
+                        break;
 
-                case "3":
-                    var advertisement = new Advertisement();
-                    _avitoDBManager.AddRecordToTable(db, advertisement);
-                    break;
+                    case "3":
+                        _avitoDBManager.AddRecordToTable(db, new Advertisement());
+                        break;
 
-                default:
-                    Console.WriteLine("Команда не распознана");
-                    break;
+                    default:
+                        Console.WriteLine("Команда не распознана");
+                        break;
+                }
+
+                this.ChangeScreen(ConsoleMenuScreen.Main);
             }
+        }
+
+        private void ChangeScreen(ConsoleMenuScreen goToScreen)
+        {
+            _currentMenuScreen = goToScreen;
         }
     }
 }

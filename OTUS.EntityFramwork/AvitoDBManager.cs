@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace OTUS.EntityFramwork
 {
     public class AvitoDBManager 
     {
-        public void ShowAllDataAsync()
-        {
-            Task.Run(ShowAllData);
-        }
-
         public void ShowAllData()
         {
             using (AvitoContext db = new AvitoContext())
@@ -31,15 +25,16 @@ namespace OTUS.EntityFramwork
             }
         }
 
-        public void AddRecordToTable(AvitoContext db, IUserInput table)
+        public void AddRecordToTable(AvitoContext db, IUserInput tableContext)
         {
-            //GetUserInput(table); //TODO: rewrite
+            tableContext.ShowTableFields();
 
-            table.ShowTableFields();
             var userInput = Console.ReadLine();
-            table.ParseFromCSV(userInput);
-
-            table.SaveChanges(db);
+            if (userInput != "")
+            { 
+                tableContext.ParseFromCSV(userInput);
+                tableContext.SaveChanges(db);
+            }
         }
     }
 }

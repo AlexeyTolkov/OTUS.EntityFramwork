@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-class AvitoContext : DbContext
+public class AvitoContext : DbContext
 {
     public AvitoContext()
         : base("MSSQL_Avito_AdDB")
