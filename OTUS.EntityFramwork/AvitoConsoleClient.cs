@@ -10,14 +10,14 @@ namespace OTUS.EntityFramwork
             UserInput = 1
         }
 
-        private AvitoDBManager _avitoDBManager;
+        private IDBManager _dbManager;
         private ConsoleMenuScreen _currentMenuScreen;
         delegate void MenuHandler(string command);
         event MenuHandler CommandInput;
 
-        public AvitoConsoleClient(AvitoDBManager avitoDBManager)
+        public AvitoConsoleClient(IDBManager dbManager)
         {
-            _avitoDBManager = avitoDBManager;
+            _dbManager = dbManager;
             _currentMenuScreen = ConsoleMenuScreen.Main;
         }
 
@@ -65,7 +65,7 @@ namespace OTUS.EntityFramwork
             switch (command)
             {
                 case "1":
-                    _avitoDBManager.ShowAllData();
+                    _dbManager.ShowAllData();
                     break;
 
                 case "2":
@@ -88,15 +88,15 @@ namespace OTUS.EntityFramwork
                 switch (command)
                 {
                     case "1":
-                        _avitoDBManager.AddRecordToTable(db, new Seller());
+                        _dbManager.AddRecordToTable(db, new Seller());
                         break;
 
                     case "2":
-                        _avitoDBManager.AddRecordToTable(db, new Category());
+                        _dbManager.AddRecordToTable(db, new Category());
                         break;
 
                     case "3":
-                        _avitoDBManager.AddRecordToTable(db, new Advertisement());
+                        _dbManager.AddRecordToTable(db, new Advertisement());
                         break;
 
                     default:

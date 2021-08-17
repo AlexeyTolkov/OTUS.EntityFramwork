@@ -2,7 +2,7 @@
 
 namespace OTUS.EntityFramwork
 {
-    public class AvitoDBManager 
+    public class AvitoDBManager : IDBManager
     {
         public void ShowAllData()
         {

@@ -4,11 +4,11 @@
     {
         static void Main(string[] args)
         {
-            var avManager = new AvitoDBManager();
-            IClient avConsole = new AvitoConsoleClient(avManager);
+            IDBManager avitoDBManager = new AvitoDBManager();
+            IClient avitoConsoleClient = new AvitoConsoleClient(avitoDBManager);
 
-            var app = new AvitoApplication(avConsole);
-            app.Run();
+            var avitoApp = new AvitoApplication(avitoConsoleClient);
+            avitoApp.Run();
         }
     }
 }

@@ -2,16 +2,16 @@
 {
     public class AvitoApplication
     {
-        private readonly IClient _avConsole;
+        private readonly IClient _avClient;
 
-        public AvitoApplication(IClient avConsole)
+        public AvitoApplication(IClient avClient)
         {
-            _avConsole = avConsole;
+            _avClient = avClient;
         }
 
         public void Run()
         {
-            _avConsole.StartUI();
+            _avClient.StartUI();
         }
     }
 }
