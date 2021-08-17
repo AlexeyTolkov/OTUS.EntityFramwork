@@ -8,8 +8,8 @@ namespace OTUS.EntityFramwork
     {
         static void Main(string[] args)
         {
-            IConsoleClient avConsole = new AvitoConsoleClient();
-            //var avManager = new AvitoDBManager();
+            var avManager = new AvitoDBManager();
+            IConsoleClient avConsole = new AvitoConsoleClient(avManager);
             //var app = avitoApplication();
 
 
@@ -89,48 +89,48 @@ namespace OTUS.EntityFramwork
             }
         }
 
-        private static void GetUserInput(IUserInput table)
-        {
-            table.ShowTableFields();
+        //private static void GetUserInput(IUserInput table)
+        //{
+        //    table.ShowTableFields();
 
-            var userInput = Console.ReadLine();
-            table.ParseFromCSV(userInput);
-        }
+        //    var userInput = Console.ReadLine();
+        //    table.ParseFromCSV(userInput);
+        //}
 
-        private static void ShowAllData()
-        {
-            using (AvitoContext db = new AvitoContext())
-            {
-                /*var catGroups = db.Advertisements.GroupBy(p => p.Category); 
-                foreach (var catGroup in catGroups)
-                {
-                    Console.WriteLine(catGroup.Key);
-                    foreach (var advert in catGroup)
-                    {
-                        Console.WriteLine("\t" + advert);
-                        Console.WriteLine("\t\t" + advert.Seller);
-                    }
-                }*/
+        //private static void ShowAllData()
+        //{
+        //    using (AvitoContext db = new AvitoContext())
+        //    {
+        //        /*var catGroups = db.Advertisements.GroupBy(p => p.Category); 
+        //        foreach (var catGroup in catGroups)
+        //        {
+        //            Console.WriteLine(catGroup.Key);
+        //            foreach (var advert in catGroup)
+        //            {
+        //                Console.WriteLine("\t" + advert);
+        //                Console.WriteLine("\t\t" + advert.Seller);
+        //            }
+        //        }*/
                 
-                foreach (var cat in db.Categories)
-                {
-                    Console.WriteLine(cat);
-                }
+        //        foreach (var cat in db.Categories)
+        //        {
+        //            Console.WriteLine(cat);
+        //        }
 
-                foreach (var seller in db.Sellers)
-                {
-                    Console.WriteLine(seller);
-                }
+        //        foreach (var seller in db.Sellers)
+        //        {
+        //            Console.WriteLine(seller);
+        //        }
 
-                foreach (var ad in db.Advertisements)
-                {
-                    Console.WriteLine(ad);
-                }
-            }
-        }
-        private static void ShowAllDataAsync()
-        {
-            Task.Run(ShowAllData);
-        }
+        //        foreach (var ad in db.Advertisements)
+        //        {
+        //            Console.WriteLine(ad);
+        //        }
+        //    }
+        //}
+        //private static void ShowAllDataAsync()
+        //{
+        //    Task.Run(ShowAllData);
+        //}
     }
 }

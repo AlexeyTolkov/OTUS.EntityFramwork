@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 public class Seller : IUserInput
@@ -31,5 +33,15 @@ public class Seller : IUserInput
     public List<string> GetTableFields()
     {
         return new List<string>() { "Name", "Phone", "Email" };
+    }
+
+    public void SaveChanges(AvitoContext db)
+    {
+        if (db != null)
+        { 
+            db.Sellers.Add(this);
+            db.SaveChanges();
+            Console.WriteLine("Запись добавлена..");
+        }
     }
 }

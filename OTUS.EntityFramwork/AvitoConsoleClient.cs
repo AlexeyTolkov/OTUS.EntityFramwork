@@ -4,12 +4,20 @@ namespace OTUS.EntityFramwork
 {
     partial class AvitoConsoleClient : IConsoleClient
     {
+        enum ConsoleMenuScreen
+        {
+            Main = 0,
+            UserInput = 1
+        }
+
+        private AvitoDBManager _avitoDBManager;
         private ConsoleMenuScreen _currentMenuScreen;
         delegate void MenuHandler(string command);
         event MenuHandler CommandInput;
 
-        public AvitoConsoleClient()
+        public AvitoConsoleClient(AvitoDBManager avitoDBManager)
         {
+            _avitoDBManager = avitoDBManager;
             _currentMenuScreen = ConsoleMenuScreen.Main;
         }
 
@@ -21,7 +29,7 @@ namespace OTUS.EntityFramwork
                     Console.WriteLine("СПИСОК ДЕЙСТВИЙ:");
                     Console.WriteLine("[1] Вывод данных");
                     Console.WriteLine("[2] Пользовательский ввод");
-                    Console.WriteLine("[3] Выход");
+                    Console.WriteLine("[q] Выход");
 
                     CommandInput = MainMenuSelect;
                     break;
@@ -32,7 +40,7 @@ namespace OTUS.EntityFramwork
                     Console.WriteLine("[2] Категории");
                     Console.WriteLine("[3] Объявления");
 
-                    CommandInput = ;
+                    CommandInput = UserInputMenuSelect;
                     break;
 
                 default:
@@ -43,9 +51,10 @@ namespace OTUS.EntityFramwork
         public void GiveABestUserExperienceEver()
         {
             var command = "" ;
-            while (command != "3")
+            while (command.ToLower() != "q")
             {
                 DrawScreen();
+
                 command = Console.ReadLine();
                 CommandInput?.Invoke(command);
             }
@@ -56,7 +65,7 @@ namespace OTUS.EntityFramwork
             switch (command)
             {
                 case "1":
-                    //_avitoDBManager.ShowAllDataAsync()
+                    _avitoDBManager.ShowAllDataAsync();
                     break;
 
                 case "2":
@@ -75,36 +84,22 @@ namespace OTUS.EntityFramwork
 
         private void UserInputMenuSelect(string command)
         {
+            var db = new AvitoContext();
             switch (command)
             {
                 case "1":
                     var seller = new Seller();
-                    GetUserInput(seller);
-
-                    db.Sellers.Add(seller);
-                    db.SaveChanges();
-
-                    Console.WriteLine("Запись добавлена..");
+                    _avitoDBManager.AddRecordToTable(db, seller);
                     break;
 
                 case "2":
                     var category = new Category();
-                    GetUserInput(category);
-
-                    db.Categories.Add(category);
-                    db.SaveChanges();
-
-                    Console.WriteLine("Запись добавлена..");
+                    _avitoDBManager.AddRecordToTable(db, category);
                     break;
 
                 case "3":
                     var advertisement = new Advertisement();
-                    GetUserInput(advertisement);
-
-                    db.Advertisements.Add(advertisement);
-                    db.SaveChanges();
-
-                    Console.WriteLine("Запись добавлена..");
+                    _avitoDBManager.AddRecordToTable(db, advertisement);
                     break;
 
                 default:
